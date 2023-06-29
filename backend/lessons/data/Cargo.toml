@@ -1,0 +1,20 @@
+[package]
+name = "data"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenvy = "0.15.7"
+sea-orm = { version = "0.11.3", features = ["sqlx-postgres", "runtime-tokio-rustls", "debug-print"] }
+tokio = { version = "1.28.2", features = ["full"] }
+axum = { version = "0.6.17", features = ["headers", "macros"] }
+dotenvy_macro = "0.15.1"
+serde = { version = "1.0.163", features = ["derive"] }
+validator = { version = "0.16.0", features = ["derive"] }
+serde_with = "3.0.0"
+chrono = "0.4.26"
+bcrypt = "0.14.0"
+jsonwebtoken = "8.3.0"
+

@@ -1,0 +1,12 @@
+/Users/shin/Desktop/todolist_docker/target/debug/deps/sqlformat-221c8867f404fde7.rmeta: /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/lib.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/formatter.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/indentation.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/inline_block.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/params.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/tokenizer.rs
+
+/Users/shin/Desktop/todolist_docker/target/debug/deps/libsqlformat-221c8867f404fde7.rlib: /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/lib.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/formatter.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/indentation.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/inline_block.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/params.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/tokenizer.rs
+
+/Users/shin/Desktop/todolist_docker/target/debug/deps/sqlformat-221c8867f404fde7.d: /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/lib.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/formatter.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/indentation.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/inline_block.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/params.rs /Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/tokenizer.rs
+
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/lib.rs:
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/formatter.rs:
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/indentation.rs:
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/inline_block.rs:
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/params.rs:
+/Users/shin/.cargo/registry/src/github.com-1ecc6299db9ec823/sqlformat-0.2.1/src/tokenizer.rs:

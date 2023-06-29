@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "backend/lessons/data",
+    "backend/lessons/routing",
+    "backend/project_solution",
+]
