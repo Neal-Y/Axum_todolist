@@ -147,7 +147,7 @@ describe("todo api", () => {
       [user, headers] = await createUser();
     });
 
-    describe("create a task", () => {
+    describe.only("create a task", () => {
       test("should be able to create a task", async () => {
         const newTask = {
           priority: "A",
@@ -164,7 +164,7 @@ describe("todo api", () => {
         expect(createdTask).not.toHaveProperty("user_id");
         expect(createdTask).not.toHaveProperty("is_default");
       });
-      test.skip("should not be able to create a task when not logged in", async () => {
+      test("should not be able to create a task when not logged in", async () => {
         let gotError = false;
         try {
           await axios.post(`${baseUrl}/tasks`);
@@ -176,7 +176,7 @@ describe("todo api", () => {
 
         expect(gotError).toBe(true);
       });
-      test.skip("cannot create a task without all required data", async () => {
+      test("cannot create a task without all required data", async () => {
         let gotError = false;
         try {
           await axios.post(`${baseUrl}/tasks`, {}, { headers });
