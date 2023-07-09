@@ -2,7 +2,7 @@ use crate::{
     middleware::request_authentication::get_authorization_from_request,
     routes::{
         hello_world::hello_world,
-        tasks::create_task::new_task,
+        tasks::{create_task::new_task, get_all_tasks::get_tasks},
         users::{create_user::create_user, login::user_login, logout::user_logout},
     },
     utilities::app_state::AppState,
@@ -17,6 +17,7 @@ pub async fn crate_route(app_state: AppState) -> Router {
     Router::new()
         .route("/api/v1/users/logout", post(user_logout))
         .route("/api/v1/tasks", post(new_task))
+        .route("/api/v1/tasks", get(get_tasks))
         .route_layer(middleware::from_fn_with_state(
             app_state.clone(),
             get_authorization_from_request,

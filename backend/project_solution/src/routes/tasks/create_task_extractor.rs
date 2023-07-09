@@ -33,6 +33,8 @@ where
         req: Request<B>,
         _state: &S,
     ) -> Result<ValidateCreateTask, Self::Rejection> {
+        //? 這是是在將我的req中使用extract用turbofish也就是::<>的方式取出Json<ValidateCreateTask>，丟到Json包裹的task變數中，並且map_err一下
+
         let Json(task) = req
             .extract::<Json<ValidateCreateTask>, _>()
             .await
@@ -44,17 +46,18 @@ where
                 )
             })?;
 
+        //? 接著才是重頭戲，我們使用.validate()函數『驗證』剛剛在struct中下的限制指令
+
         if let Err(errors) = task.validate() {
             let field_errors = errors.field_errors();
             if let Some(error_message) = field_errors
-                .values()
-                .flat_map(|errors| errors.iter())
+                .values() // 抓出field_errors中鍵值對的『值』並且返回一個迭代器 ps:取『鍵』.key()
+                .flat_map(|errors| errors.iter()) // 扁平化，
                 .find_map(|error| error.message.clone().map(|cow| cow.to_string()))
             {
                 return Err(AppError::new(StatusCode::BAD_REQUEST, error_message));
             }
         }
-
         Ok(task)
     }
 }

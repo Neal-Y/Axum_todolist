@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod create_task;
 pub mod create_task_extractor;
+pub mod get_all_tasks;
 
 #[derive(Serialize, Deserialize)]
 pub struct RequestTaskContainer {
@@ -22,5 +23,10 @@ pub struct ResponseTaskData {
 
 #[derive(Serialize, Deserialize)]
 pub struct ResponseTaskContainer {
-    data: ResponseTaskData,
+    pub data: ResponseTaskData,
+}
+
+#[derive(Serialize)]
+pub struct ResponseTasksContainer {
+    pub data: Vec<ResponseTaskData>,
 }
