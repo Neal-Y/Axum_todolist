@@ -1,4 +1,5 @@
 use super::{RequestUser, ResponseDataMsg, ResponseUserId};
+use crate::database::tasks::{self, Entity as Tasks};
 use crate::utilities::app_error::AppError;
 use crate::utilities::app_state::AppState;
 use crate::utilities::hash_table::hash_password;
@@ -6,7 +7,7 @@ use crate::{database::users, utilities::jwt::create_jwt_token};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
-use sea_orm::{ActiveModelTrait, Set, TryIntoModel};
+use sea_orm::{ActiveModelTrait, ColumnTrait, EntityTrait, QueryFilter, Set, TryIntoModel};
 
 pub async fn create_user(
     State(app_state): State<AppState>,
@@ -48,6 +49,35 @@ pub async fn create_user(
             eprintln!("can't into model {}", error);
             AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "Error creating user")
         })?;
+
+    let default_tasks = Tasks::find()
+        .filter(tasks::Column::IsDefault.eq(Some(true)))
+        .all(&app_state.database)
+        .await
+        .map_err(|error| {
+            eprintln!("error {:?}", error);
+            AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "can't found")
+        })?;
+    dbg!(default_tasks.len());
+
+    // //! 過濾掉所有東西了現在Vec裡面沒有資料，還有就是資料庫本身並沒有IsDefault為true的為啥要這樣過濾後再save？
+
+    for default_task in default_tasks {
+        dbg!("some like", &default_task.title);
+        let task = tasks::ActiveModel {
+            priority: Set(default_task.priority),
+            title: Set(default_task.title),
+            completed_at: Set(default_task.completed_at),
+            description: Set(default_task.description),
+            deleted_at: Set(default_task.deleted_at),
+            user_id: Set(Some(user.id)),
+            ..Default::default()
+        };
+
+        task.save(&app_state.database)
+            .await
+            .map_err(|_| AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "can't save"))?;
+    }
 
     Ok(Json(ResponseDataMsg {
         data: ResponseUserId {

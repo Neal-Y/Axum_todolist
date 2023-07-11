@@ -1,4 +1,3 @@
-use sea_orm::prelude::DateTimeWithTimeZone;
 use serde::{Deserialize, Serialize};
 
 pub mod create_task;
@@ -18,7 +17,7 @@ pub struct ResponseTaskData {
     pub title: String,
     pub description: Option<String>,
     pub priority: Option<String>,
-    pub completed_at: Option<DateTimeWithTimeZone>,
+    pub completed_at: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -26,7 +25,7 @@ pub struct ResponseTaskContainer {
     pub data: ResponseTaskData,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct ResponseTasksContainer {
     pub data: Vec<ResponseTaskData>,
 }

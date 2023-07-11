@@ -39,7 +39,7 @@ pub async fn new_task(
         title: task.title,
         description: task.description,
         priority: task.priority,
-        completed_at: task.completed_at,
+        completed_at: task.completed_at.map(|time| time.to_string()),
     };
     Ok((
         StatusCode::CREATED,
