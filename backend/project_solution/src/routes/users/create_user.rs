@@ -60,10 +60,10 @@ pub async fn create_user(
         })?;
     dbg!(default_tasks.len());
 
-    // //! 過濾掉所有東西了現在Vec裡面沒有資料，還有就是資料庫本身並沒有IsDefault為true的為啥要這樣過濾後再save？
+    // //! what can I create default tasks when filter filters everything, because all of the task from the database the "IsDefault" Column is false
 
     for default_task in default_tasks {
-        dbg!("some like", &default_task.title);
+        dbg!("some like", &default_task.title); // didn't run this line because the filter filters everything so default_tasks is empty
         let task = tasks::ActiveModel {
             priority: Set(default_task.priority),
             title: Set(default_task.title),
