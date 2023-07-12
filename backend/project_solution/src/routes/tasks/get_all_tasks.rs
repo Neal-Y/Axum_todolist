@@ -37,6 +37,8 @@ pub async fn get_tasks(
             completed_at: model
                 .completed_at
                 .map(|completed_at| completed_at.to_string()),
+            // deleted_at: model.deleted_at,
+            // is_default: model.is_default,
         })
         .collect::<Vec<ResponseTaskData>>();
     // //! turbo fish

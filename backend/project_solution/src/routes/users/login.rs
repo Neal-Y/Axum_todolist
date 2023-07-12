@@ -23,8 +23,9 @@ pub async fn user_login(
             AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "Invalid username")
         })?;
 
-    // //! 資料庫沒找到所以database_user是none導致下面直接返回
-    // //! 所以接下來請找到api.test.js是怎麼設定的
+    // // before this line is executed
+    // // //! 資料庫沒找到所以database_user是none導致下面直接返回
+    // // //! 所以接下來請找到api.test.js是怎麼設定的
 
     if let Some(verified_user_data) = database_user {
         if !verify_hash_password(&login_info.password, &verified_user_data.password)? {
@@ -61,7 +62,6 @@ pub async fn user_login(
             username: finished_update.username,
             token,
         };
-
         Ok(Json(ResponseDataMsg { data: response }))
     } else {
         Err(AppError::new(

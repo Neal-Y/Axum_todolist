@@ -42,19 +42,35 @@ pub async fn get_authorization_from_request<T>(
 
     //? 不需要，因為如果找不到用戶， 『one』 應該會返回一個錯誤，它將立即返回一個錯誤
     // 畢竟token是option 檢查到底有沒有
-    // if let Some(checked_token_from_user) = squeezed_database_user {
+    // if let Some(checked_token_from_user) = checked_token_from_user {
     //     request.extensions_mut().insert(checked_token_from_user);
     // } else {
     //     return Err(AppError::new(StatusCode::UNAUTHORIZED, "try again"));
     // }
 
     request.extensions_mut().insert(checked_token_from_user);
+    // let user = Users::find()
+    //     .filter(users::Column::Token.eq(Some(squeezed_header_token.to_owned())))
+    //     .one(&app_state.database)
+    //     .await
+    //     .map_err(|error| {
+    //         eprintln!("Error getting user by token: {:?}", error);
+    //         AppError::new(
+    //             StatusCode::INTERNAL_SERVER_ERROR,
+    //             "There was a problem getting your account",
+    //         )
+    //     })?;
+
+    // if let Some(user) = user {
+    //     request.extensions_mut().insert(user);
+    // } else {
+    //     return Err(AppError::new(
+    //         StatusCode::UNAUTHORIZED,
+    //         "You are not authorized for this",
+    //     ));
+    // }
     Ok(next.run(request).await)
 }
-
-// // 為啥需要重複檢查
-// //! from_fn_with_state是幹嘛的為啥要從原本的from_fn換成那個
-// //! 為啥要加app_state
 
 /*
 我來一步步講解一下我剛剛代碼的思路

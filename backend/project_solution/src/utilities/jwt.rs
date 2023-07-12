@@ -12,7 +12,7 @@ struct Claims {
 
 // 因為secret是一個跟資料庫連接一次拿到資料就可以存起來的所以不用『每次』都尋找環境變量
 pub fn create_jwt_token(secret: &str, username: String) -> Result<String, AppError> {
-    let exp = (Utc::now() + Duration::seconds(20)).timestamp() as usize;
+    let exp = (Utc::now() + Duration::minutes(120)).timestamp() as usize;
 
     let header = Header::new(Algorithm::HS256);
     let claims = Claims { exp, username };

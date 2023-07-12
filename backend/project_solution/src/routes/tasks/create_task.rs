@@ -18,6 +18,8 @@ pub async fn new_task(
         title: Set(task_info.title.unwrap()),
         description: Set(task_info.description),
         user_id: Set(Some(user.id)),
+        // deleted_at: Set(task_info.deleted_at),
+        // is_default: Set(task_info.is_default),
         ..Default::default()
     };
 
@@ -40,6 +42,8 @@ pub async fn new_task(
         description: task.description,
         priority: task.priority,
         completed_at: task.completed_at.map(|time| time.to_string()),
+        // deleted_at: task.deleted_at,
+        // is_default: task.is_default,
     };
     Ok((
         StatusCode::CREATED,

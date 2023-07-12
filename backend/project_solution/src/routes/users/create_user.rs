@@ -31,13 +31,11 @@ pub async fn create_user(
             if error_msg
                 .contains("duplicate key value violates unique constraint \"users_username_key\"")
             {
-                eprintln!("{:?}", error);
                 AppError::new(
                     StatusCode::BAD_REQUEST,
                     "Username already taken, try again with a different user name",
                 )
             } else {
-                eprintln!("{:?}", error);
                 AppError::new(
                     StatusCode::INTERNAL_SERVER_ERROR,
                     "Something went wrong, plz try again",
@@ -58,12 +56,12 @@ pub async fn create_user(
             eprintln!("error {:?}", error);
             AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "can't found")
         })?;
-    dbg!(default_tasks.len());
+    // dbg!(default_tasks.len());
 
     // //! what can I create default tasks when filter filters everything, because all of the task from the database the "IsDefault" Column is false
 
     for default_task in default_tasks {
-        dbg!("some like", &default_task.title); // didn't run this line because the filter filters everything so default_tasks is empty
+        // dbg!("some like", &default_task.title); // didn't run this line because the filter filters everything so default_tasks is empty
         let task = tasks::ActiveModel {
             priority: Set(default_task.priority),
             title: Set(default_task.title),

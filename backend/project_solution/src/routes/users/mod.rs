@@ -9,7 +9,7 @@ pub struct ResponseDataMsg {
     data: ResponseUserId,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct ResponseUserId {
     id: i32,
     username: String,

@@ -5,6 +5,7 @@ use axum::{
     http::{Request, StatusCode},
     BoxError, Json, RequestExt,
 };
+
 use serde::Deserialize;
 use validator::Validate;
 
@@ -17,6 +18,8 @@ pub struct ValidateCreateTask {
     #[validate(required(message = "missing task title"))]
     pub title: Option<String>,
     pub description: Option<String>,
+    // pub deleted_at: Option<DateTimeWithTimeZone>,
+    // pub is_default: Option<bool>,
 }
 
 #[async_trait]

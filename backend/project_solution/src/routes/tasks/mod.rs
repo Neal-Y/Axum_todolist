@@ -18,6 +18,8 @@ pub struct ResponseTaskData {
     pub description: Option<String>,
     pub priority: Option<String>,
     pub completed_at: Option<String>,
+    // pub deleted_at: Option<DateTimeWithTimeZone>,
+    // pub is_default: Option<bool>,
 }
 
 #[derive(Serialize, Deserialize)]
