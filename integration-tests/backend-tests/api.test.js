@@ -11,8 +11,6 @@ const baseUrl = `${process.env.API_URI}:${apiPort}/api/v1`;
 const JWT_SECRET = process.env.JWT_SECRET;
 const db = knex(dbConfiguration);
 
-console.log(apiPort, baseUrl);
-
 dns.setDefaultResultOrder("ipv4first");
 jest.setTimeout(10000);
 
@@ -147,11 +145,11 @@ describe("todo api", () => {
       [user, headers] = await createUser();
     });
 
-    describe.only("create a task", () => {
+    describe("create a task", () => {
       test("should be able to create a task", async () => {
         const newTask = {
           priority: "A",
-          title: `this is a test.skip task - ${Date.now()}`,
+          title: `this is a test task - ${Date.now()}`,
           description: "This task is the best task",
         };
         const result = await createTask(headers, newTask);
@@ -202,7 +200,7 @@ describe("todo api", () => {
         await createTask(getAllTasksHeaders, { title: "task 3" });
       });
 
-      test.skip("should be able to get all my tasks", async () => {
+      test("should be able to get all my tasks", async () => {
         const createdTasks = await axios.get(`${baseUrl}/tasks`, {
           headers: getAllTasksHeaders,
         });
@@ -212,7 +210,7 @@ describe("todo api", () => {
         expect(createdTasks.data.data[0]).not.toHaveProperty("user_id");
       });
 
-      test.skip("should not be able to get any tasks when logged out", async () => {
+      test("should not be able to get any tasks when logged out", async () => {
         let gotError = false;
 
         try {
@@ -224,7 +222,7 @@ describe("todo api", () => {
         }
       });
 
-      test.skip("should not be able to get other users tasks", async () => {
+      test("should not be able to get other users tasks", async () => {
         const [user, headers] = await createUser();
 
         await createTask(headers, { title: "my task 10" });
@@ -237,7 +235,7 @@ describe("todo api", () => {
         expect(response.data.data.length).toBe(5);
       });
 
-      test.skip("should not be able to get deleted tasks", async () => {
+      test("should not be able to get deleted tasks", async () => {
         const deletedUser = await axios.post(`${baseUrl}/users/login`, {
           username: "deleteduser",
           password: "password",
@@ -251,7 +249,7 @@ describe("todo api", () => {
       });
     });
 
-    describe("get one task", () => {
+    describe.skip("get one task", () => {
       let users;
       let headers;
       let task;
@@ -264,7 +262,7 @@ describe("todo api", () => {
         await createTask(headers, { title: "my one task 20" });
       });
 
-      test.skip("should be able to get my task", async () => {
+      test("should be able to get my task", async () => {
         const result = await axios.get(`${baseUrl}/tasks/${task.id}`, {
           headers,
         });
@@ -273,7 +271,7 @@ describe("todo api", () => {
         expect(result.data.data.title).toBe("my one task 10");
       });
 
-      test.skip("should not be able to get task when logged out", async () => {
+      test("should not be able to get task when logged out", async () => {
         let gotError = false;
         try {
           await axios.get(`${baseUrl}/tasks/${task.id}`);
@@ -286,7 +284,7 @@ describe("todo api", () => {
         expect(gotError).toBe(true);
       });
 
-      test.skip("should not be able to get another users task", async () => {
+      test("should not be able to get another users task", async () => {
         const [newUser, newHeaders] = await createUser();
         let gotError = false;
         try {
@@ -303,8 +301,8 @@ describe("todo api", () => {
       });
     });
 
-    describe("update task", () => {
-      test.skip("should be able to mark a task as completed", async () => {
+    describe.skip("update task", () => {
+      test("should be able to mark a task as completed", async () => {
         const [user, headers] = await createUser();
         const taskResponse = await createTask(headers, { title: "new task" });
         const task = taskResponse.data.data;
@@ -319,7 +317,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).not.toBe(null);
       });
 
-      test.skip("should be able to mark a task as not completed", async () => {
+      test("should be able to mark a task as not completed", async () => {
         const [user, headers] = await createUser();
         const taskResponse = await createTask(headers, { title: "new task" });
         const task = taskResponse.data.data;
@@ -337,7 +335,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).toBe(null);
       });
 
-      test.skip("should be able to update all fields in the task", async () => {
+      test("should be able to update all fields in the task", async () => {
         const [user, headers] = await createUser();
         const initialTask = {
           priority: "A",
@@ -372,7 +370,7 @@ describe("todo api", () => {
         expect(completed_at.toUTCString()).toBe(now.toUTCString());
       });
 
-      test.skip("can_update_some_of_the_task_without_losing_data", async () => {
+      test("can_update_some_of_the_task_without_losing_data", async () => {
         const [user, headers] = await createUser();
         const initialTask = {
           priority: "A",
@@ -404,7 +402,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).not.toBe(null);
       });
 
-      test.skip("can uncomplete a task with an update", async () => {
+      test("can uncomplete a task with an update", async () => {
         const [user, headers] = await createUser();
         const initialTask = {
           priority: "A",
@@ -437,7 +435,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).toBe(null);
       });
 
-      test.skip("should not be able to mark other users tasks as completed", async () => {
+      test("should not be able to mark other users tasks as completed", async () => {
         const [user1, headers1] = await createUser();
         const [user2, headers2] = await createUser();
         const createdTaskResponse = await createTask(headers1, {
@@ -463,7 +461,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).toBe(null);
       });
 
-      test.skip("should not be able to mark other users tasks as not completed", async () => {
+      test("should not be able to mark other users tasks as not completed", async () => {
         const [user1, headers1] = await createUser();
         const [user2, headers2] = await createUser();
         const createdTaskResponse = await createTask(headers1, {
@@ -495,7 +493,7 @@ describe("todo api", () => {
         expect(dbTask.completed_at).not.toBe(null);
       });
 
-      test.skip("should not be able to update other users tasks", async () => {
+      test("should not be able to update other users tasks", async () => {
         const [user1, headers1] = await createUser();
         const [user2, headers2] = await createUser();
         const createdTaskResponse = await createTask(headers1, {
@@ -522,8 +520,8 @@ describe("todo api", () => {
       });
     });
 
-    describe("soft delete a task", () => {
-      test.skip("should be able to soft delete a task", async () => {
+    describe.skip("soft delete a task", () => {
+      test("should be able to soft delete a task", async () => {
         const [user, headers] = await createUser();
         const newTaskResponse = await createTask(headers, {
           title: "am I deleted?",
@@ -539,7 +537,7 @@ describe("todo api", () => {
         expect(dbTask.deleted_at).not.toBe(null);
       });
 
-      test.skip("should not be able to soft delete another users task", async () => {
+      test("should not be able to soft delete another users task", async () => {
         const [user, headers] = await createUser();
         const [user2, headers2] = await createUser();
         const newTaskResponse = await createTask(headers, {
@@ -568,8 +566,8 @@ describe("todo api", () => {
     });
   });
 
-  describe("Creating an account", () => {
-    test.skip("new users should get default tasks", async () => {
+  describe.skip("Creating an account", () => {
+    test("new users should get default tasks", async () => {
       const [user, headers] = await createUser();
       const tasksResponse = await axios.get(`${baseUrl}/tasks`, { headers });
       const tasks = tasksResponse.data.data;

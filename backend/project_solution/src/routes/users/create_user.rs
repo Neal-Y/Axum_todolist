@@ -1,5 +1,6 @@
 use super::{RequestUser, ResponseDataMsg, ResponseUserId};
 use crate::database::tasks::{self, Entity as Tasks};
+use crate::database::users::Model;
 use crate::utilities::app_error::AppError;
 use crate::utilities::app_state::AppState;
 use crate::utilities::hash_table::hash_password;
@@ -7,7 +8,9 @@ use crate::{database::users, utilities::jwt::create_jwt_token};
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::Json;
-use sea_orm::{ActiveModelTrait, ColumnTrait, EntityTrait, QueryFilter, Set, TryIntoModel};
+use sea_orm::{
+    ActiveModelTrait, ColumnTrait, DatabaseConnection, EntityTrait, QueryFilter, Set, TryIntoModel,
+};
 
 pub async fn create_user(
     State(app_state): State<AppState>,
@@ -48,20 +51,31 @@ pub async fn create_user(
             AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "Error creating user")
         })?;
 
+    create_default_task_for_user(&app_state.database, &user).await?;
+
+    Ok(Json(ResponseDataMsg {
+        data: ResponseUserId {
+            id: user.id,
+            username: user.username,
+            token: user.token.unwrap(),
+        },
+    }))
+}
+
+async fn create_default_task_for_user(
+    db: &DatabaseConnection,
+    user: &Model,
+) -> Result<(), AppError> {
     let default_tasks = Tasks::find()
         .filter(tasks::Column::IsDefault.eq(Some(true)))
-        .all(&app_state.database)
+        .all(db)
         .await
         .map_err(|error| {
             eprintln!("error {:?}", error);
             AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "can't found")
         })?;
-    // dbg!(default_tasks.len());
-
-    // //! what can I create default tasks when filter filters everything, because all of the task from the database the "IsDefault" Column is false
 
     for default_task in default_tasks {
-        // dbg!("some like", &default_task.title); // didn't run this line because the filter filters everything so default_tasks is empty
         let task = tasks::ActiveModel {
             priority: Set(default_task.priority),
             title: Set(default_task.title),
@@ -72,16 +86,10 @@ pub async fn create_user(
             ..Default::default()
         };
 
-        task.save(&app_state.database)
+        task.save(db)
             .await
             .map_err(|_| AppError::new(StatusCode::INTERNAL_SERVER_ERROR, "can't save"))?;
     }
 
-    Ok(Json(ResponseDataMsg {
-        data: ResponseUserId {
-            id: user.id,
-            username: user.username,
-            token: user.token.unwrap(),
-        },
-    }))
+    Ok(())
 }

@@ -1,0 +1,1 @@
+std::iter::Map<std::collections::hash_map::Values<'_, Cow<'_, str>, JsonValue>, [closure@backend/project_solution/src/routes/tasks/create_task_extractor.rs:66:74: 66:77]>
