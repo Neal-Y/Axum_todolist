@@ -249,7 +249,7 @@ describe("todo api", () => {
       });
     });
 
-    describe.skip("get one task", () => {
+    describe("get one task", () => {
       let users;
       let headers;
       let task;
@@ -301,7 +301,7 @@ describe("todo api", () => {
       });
     });
 
-    describe.skip("update task", () => {
+    describe.only("update task", () => {
       test("should be able to mark a task as completed", async () => {
         const [user, headers] = await createUser();
         const taskResponse = await createTask(headers, { title: "new task" });
