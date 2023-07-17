@@ -301,7 +301,7 @@ describe("todo api", () => {
       });
     });
 
-    describe.only("update task", () => {
+    describe("update task", () => {
       test("should be able to mark a task as completed", async () => {
         const [user, headers] = await createUser();
         const taskResponse = await createTask(headers, { title: "new task" });
@@ -520,7 +520,7 @@ describe("todo api", () => {
       });
     });
 
-    describe.skip("soft delete a task", () => {
+    describe.only("soft delete a task", () => {
       test("should be able to soft delete a task", async () => {
         const [user, headers] = await createUser();
         const newTaskResponse = await createTask(headers, {
@@ -566,7 +566,7 @@ describe("todo api", () => {
     });
   });
 
-  describe.skip("Creating an account", () => {
+  describe.only("Creating an account", () => {
     test("new users should get default tasks", async () => {
       const [user, headers] = await createUser();
       const tasksResponse = await axios.get(`${baseUrl}/tasks`, { headers });
