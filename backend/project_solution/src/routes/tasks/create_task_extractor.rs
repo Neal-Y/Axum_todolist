@@ -19,7 +19,7 @@ pub struct ValidateCreateTask {
     pub title: Option<String>,
     pub description: Option<String>,
     // pub deleted_at: Option<DateTimeWithTimeZone>,
-    // pub is_default: Option<bool>,
+    pub is_default: Option<bool>,
 }
 
 #[async_trait]

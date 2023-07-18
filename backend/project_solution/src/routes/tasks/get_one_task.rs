@@ -38,7 +38,8 @@ pub async fn get_task(
                 title: task.title,
                 description: task.description,
                 priority: task.priority,
-                completed_at: task.completed_at.map(|str| str.to_string()),
+                completed_at: task.completed_at,
+                // is_default: task.is_default,
             },
         }))
     } else {

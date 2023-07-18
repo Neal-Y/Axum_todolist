@@ -51,7 +51,7 @@ pub struct ResponseTaskData {
     pub title: String,
     pub description: Option<String>,
     pub priority: Option<String>,
-    pub completed_at: Option<String>,
+    pub completed_at: Option<DateTimeWithTimeZone>,
     // pub deleted_at: Option<DateTimeWithTimeZone>,
     // pub is_default: Option<bool>,
 }

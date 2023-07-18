@@ -34,9 +34,7 @@ pub async fn get_tasks(
             title: model.title,
             description: model.description,
             priority: model.priority,
-            completed_at: model
-                .completed_at
-                .map(|completed_at| completed_at.to_string()),
+            completed_at: model.completed_at,
             // deleted_at: model.deleted_at,
             // is_default: model.is_default,
         })
