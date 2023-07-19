@@ -571,7 +571,6 @@ describe("todo api", () => {
       const [user, headers] = await createUser();
       const tasksResponse = await axios.get(`${baseUrl}/tasks`, { headers });
       const tasks = tasksResponse.data.data;
-      console.log(tasks);
       expect(tasks.length).toBe(2);
       const aTask = tasks.find((task) => task.priority == "A");
       expect(aTask.title).toBe(

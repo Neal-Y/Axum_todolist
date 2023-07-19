@@ -16,14 +16,10 @@ pub async fn mark_completed(
     Extension(user): Extension<UserModel>,
     State(app_state): State<AppState>,
 ) -> Result<(), AppError> {
-    let mut task = task_with_user_checker(
-        Path(path),
-        Extension(user),
-        State(app_state.database.clone()),
-    )
-    .await?;
+    let mut task =
+        task_with_user_checker(Path(path), Extension(user), State(&app_state.database)).await?;
     task.completed_at = Set(Some(Utc::now().into()));
-    save_task(task, State(app_state.database)).await?;
+    save_task(task, State(&app_state.database)).await?;
     Ok(())
 }
 
@@ -32,14 +28,10 @@ pub async fn mark_uncompleted(
     Extension(user): Extension<UserModel>,
     State(app_state): State<AppState>,
 ) -> Result<(), AppError> {
-    let mut task = task_with_user_checker(
-        Path(path),
-        Extension(user),
-        State(app_state.database.clone()),
-    )
-    .await?;
+    let mut task =
+        task_with_user_checker(Path(path), Extension(user), State(&app_state.database)).await?;
     task.completed_at = Set(None);
-    save_task(task, State(app_state.database)).await?;
+    save_task(task, State(&app_state.database)).await?;
     Ok(())
 }
 
@@ -52,12 +44,8 @@ pub async fn update_all_field_with_task(
     State(app_state): State<AppState>,
     Json(request_task_data): Json<RequestTaskContainer>,
 ) -> Result<(), AppError> {
-    let mut task = task_with_user_checker(
-        Path(task_id),
-        Extension(user),
-        State(app_state.database.clone()),
-    )
-    .await?;
+    let mut task =
+        task_with_user_checker(Path(task_id), Extension(user), State(&app_state.database)).await?;
     if let Some(title) = request_task_data.title {
         task.title = Set(title)
     };
@@ -72,6 +60,6 @@ pub async fn update_all_field_with_task(
     if let Some(description) = request_task_data.description {
         task.description = Set(description);
     }
-    save_task(task, State(app_state.database)).await?;
+    save_task(task, State(&app_state.database)).await?;
     Ok(())
 }

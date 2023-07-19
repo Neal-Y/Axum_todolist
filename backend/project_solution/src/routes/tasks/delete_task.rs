@@ -17,13 +17,9 @@ pub async fn delete_task(
     Extension(user): Extension<UserModel>,
     State(app_state): State<AppState>,
 ) -> Result<(), AppError> {
-    let mut task = task_with_user_checker(
-        Path(task_id),
-        Extension(user),
-        State(app_state.database.clone()),
-    )
-    .await?;
+    let mut task =
+        task_with_user_checker(Path(task_id), Extension(user), State(&app_state.database)).await?;
     task.deleted_at = Set(Some(Utc::now().fixed_offset()));
-    save_task(task, State(app_state.database)).await?;
+    save_task(task, State(&app_state.database)).await?;
     Ok(())
 }
