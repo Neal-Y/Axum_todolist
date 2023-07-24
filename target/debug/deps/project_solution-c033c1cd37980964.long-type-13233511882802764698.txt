@@ -1,1 +1,0 @@
-Pin<Box<dyn Future<Output = Result<database::tasks::ActiveModel, sea_orm::DbErr>> + Send>>
